@@ -59,6 +59,9 @@ YOLO yaml格式：
 
 **tain&val準備訓練驗證參數**
 
+<details>
+<summary><b>Train & Validation 訓練參數（點擊展開）</b></summary>
+
 ```yaml
 task: detect
 mode: train
@@ -251,12 +254,6 @@ runs/detect/train/
 └── F1_curve.png
 ```
 
-重要指標：
-
-- Precision
-- Recall
-- mAP50
-- mAP50-95
 
 ---
 

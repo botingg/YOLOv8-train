@@ -175,6 +175,7 @@ tracker: botsort.yaml
 save_dir: your_path
 
 ```
+</details>
 
 ---
 

@@ -6,7 +6,7 @@
 
 ---
 
-# 1. 專案架構
+# 1. 作業架構
 
 ```text
 yolov8-pi-project/
@@ -192,21 +192,37 @@ names:
 
 ---
 
-# 5. 訓練 YOLOv8
+# 5. 裁切測試檔案 YOLOv8
 
-## train.py
+## extract_frames.py
 
 ```python
-from ultralytics import YOLO
+import cv2
+import os
 
-model = YOLO("yolov8n.pt")
+videos = ["burn.mp4", "burn1.mp4", "burn2.mp4"]
 
-model.train(
-    data="data.yaml",
-    epochs=100,
-    imgsz=640,
-    batch=16,
-    device=0
+os.makedirs("dataset/images", exist_ok=True)
+
+count = 0
+
+for v in videos:
+    cap = cv2.VideoCapture(v)
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # 每 5 frame 存一張（避免太多）
+        if count % 5 == 0:
+            cv2.imwrite(f"dataset/images/img_{count}.jpg", frame)
+
+        count += 1
+
+cap.release()
+
+print("Done extracting frames")
 )
 ```
 

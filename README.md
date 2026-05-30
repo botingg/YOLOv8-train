@@ -6,7 +6,7 @@
 
 ---
 
-# 1. 作業架構
+# 1. Path_Tree
 
 ```text
 yolov8-pi-project/

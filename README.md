@@ -1,4 +1,4 @@
-# YOLOv8 + Raspberry Pi 4 火災偵測系統完整開發指南
+# YOLOv8 + Raspberry Pi 4 火災偵測系統完整開發
 
 ## 專案目標
 
@@ -13,36 +13,43 @@ yolov8-pi-project/
 │
 ├── dataset/
 │   ├── images/
-│   │   ├── train/
-│   │   ├── val/
-│   ├── labels/
-│       ├── train/
-│       ├── val/
+│   │   ├── all_png.....
+
 │
-├── models/
-│   ├── yolov8n.pt
-│   ├── best.pt
-│   ├── best.onnx
+├── output/
+│   ├── output_burn.mp4
+│   ├── output_burn1.mp4
+│   ├── output_burn2.mp4
 │
 ├── runs/
-│
-├── scripts/
-│   ├── train.py
-│   ├── export_onnx.py
-│   ├── detect_pc.py
-│   ├── detect_pi.py
-│   ├── make_csv.py
-│
+│   ├── detect
+│   |  ├── train
+│   |  |  ├── weights
+│   |  |  ├──  best.pt
+│   |  |  ├──  last.pt
+│   |  |  ├──  BoxXX_curve.ong...
+│   |  |  ├──  result.csv
+│   |  |  ├──  result.png
+│   |  |  ├──  train_batchxx.png...
+│   |  |  ├──  val_batchxx.png...
+│   |  |  ├──  args.yaml
 ├── data.yaml
-├── requirements.txt
+├── burn.mp4
+├── burn1.mp4
+├── burn2.mp4
+├── detect.py
+├── extract_frames.py
+├── fire.yaml
+├── yolo26n.pt
+├── yolov8n.pt
 └── README.md
 ```
 
 ---
 
-# 2. 開發環境建置
+# 2. 架構圖
 
-## 建立 Conda 環境
+<img src="yolov8_fire.drawio.png" width="300">
 
 ```bash
 conda create -n yolo python=3.10

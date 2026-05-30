@@ -298,9 +298,21 @@ runs/detect/train/weights/best.pt
 ```
 
 
-# 10. FPS優化技巧
-**驗證與查看**
-<img src="runs\detect\train\results.png" width="300">
+# 10. 驗證與查看
+
+<img src="runs\detect\train\results.png" width="500">
+<img src="runs\detect\train\train_batch1.jpg" width="500">
+<img src="runs\detect\train\train_batch2.jpg" width="500">
+<img src="runs\detect\train\train_batch420.jpg" width="500">
+<img src="runs\detect\train\train_batch421.jpg" width="500">
+<img src="runs\detect\train\train_batch422.jpg" width="500">
+<img src="runs\detect\train\val_batch0_labels.jpg" width="500">
+<img src="runs\detect\train\val_batch0_pred.jpg" width="500">
+<img src="runs\detect\train\val_batch1_labels.jpg" width="500">
+<img src="runs\detect\train\val_batch1_pred.jpg" width="500">
+<img src="runs\detect\train\val_batch2_labels.jpg" width="500">
+<img src="runs\detect\train\val_batch2_pred.jpg" width="500">
+
 
 
 

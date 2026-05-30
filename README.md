@@ -33,6 +33,7 @@ yolov8-pi-project/
 │   |  |  ├──  train_batchxx.png...
 │   |  |  ├──  val_batchxx.png...
 │   |  |  ├──  args.yaml
+│   |  |  ├──  ...
 ├── data.yaml
 ├── burn.mp4
 ├── burn1.mp4
@@ -51,10 +52,6 @@ yolov8-pi-project/
 
 <img src="yolov8_fire.drawio.png" width="300">
 
-```bash
-conda create -n yolo python=3.10
-conda activate yolo
-```
 
 ## 安裝必要套件
 
@@ -66,51 +63,130 @@ pip install pandas
 pip install matplotlib
 ```
 
-## GPU版本（選用）
-
-```bash
-pip install torch torchvision torchaudio
-```
-
----
 
 # 3. Dataset 準備
 
-YOLO Dataset格式：
+YOLO yaml格式：
 
-```text
-dataset/
-├── images/
-│   ├── train
-│   └── val
-│
-├── labels/
-│   ├── train
-│   └── val
+**tain&val準備訓練驗證參數**
+
+```yaml
+task: detect
+mode: train
+model: yolov8n.pt
+data: fire.yaml
+epochs: 80
+time: null
+patience: 100
+batch: 16
+imgsz: 320
+save: true
+save_period: -1
+cache: false
+device: null
+workers: 8
+project: null
+name: train
+exist_ok: false
+pretrained: true
+optimizer: auto
+verbose: true
+seed: 0
+deterministic: true
+single_cls: false
+rect: false
+cos_lr: false
+close_mosaic: 10
+resume: false
+amp: true
+fraction: 1.0
+profile: false
+freeze: null
+multi_scale: 0.0
+compile: false
+overlap_mask: true
+mask_ratio: 4
+dropout: 0.0
+val: true
+split: val
+save_json: false
+conf: null
+iou: 0.7
+max_det: 300
+half: false
+dnn: false
+plots: true
+end2end: null
+source: null
+vid_stride: 1
+stream_buffer: false
+visualize: false
+augment: false
+agnostic_nms: false
+classes: null
+retina_masks: false
+embed: null
+show: false
+save_frames: false
+save_txt: false
+save_conf: false
+save_crop: false
+show_labels: true
+show_conf: true
+show_boxes: true
+line_width: null
+format: torchscript
+keras: false
+optimize: false
+int8: false
+dynamic: false
+simplify: true
+opset: null
+workspace: null
+nms: false
+lr0: 0.01
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+box: 7.5
+cls: 0.5
+cls_pw: 0.0
+dfl: 1.5
+pose: 12.0
+kobj: 1.0
+rle: 1.0
+angle: 1.0
+nbs: 64
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 0.0
+translate: 0.1
+scale: 0.5
+shear: 0.0
+perspective: 0.0
+flipud: 0.0
+fliplr: 0.5
+bgr: 0.0
+mosaic: 1.0
+mixup: 0.0
+cutmix: 0.0
+copy_paste: 0.0
+copy_paste_mode: flip
+auto_augment: randaugment
+erasing: 0.4
+cfg: null
+tracker: botsort.yaml
+save_dir: your_path
+
 ```
 
 ---
 
-## Label格式
-
-每個標註檔內容：
-
-```text
-class_id x_center y_center width height
-```
-
-範例：
-
-```text
-0 0.52 0.48 0.30 0.40
-1 0.20 0.33 0.10 0.15
-```
-
-所有座標皆需正規化至0~1。
-
----
-
-# 4. 建立 data.yaml
+# 4. 建立 fire.yaml
 
 ```yaml
 path: dataset
@@ -148,7 +224,7 @@ model.train(
 ## 執行訓練
 
 ```bash
-python train.py
+python detect_fire.py
 ```
 
 ---
@@ -179,36 +255,8 @@ runs/detect/train/
 
 ---
 
-# 7. 模型轉換 ONNX
 
-## export_onnx.py
-
-```python
-from ultralytics import YOLO
-
-model = YOLO("best.pt")
-
-model.export(
-    format="onnx",
-    imgsz=320
-)
-```
-
-執行：
-
-```bash
-python export_onnx.py
-```
-
-產生：
-
-```text
-best.onnx
-```
-
----
-
-# 8. Raspberry Pi 4 環境建置
+# 7. Raspberry Pi 4 環境建置
 
 ## 更新系統
 
@@ -230,87 +278,34 @@ pip3 install onnxruntime
 
 ---
 
-# 9. Raspberry Pi 即時推論
+# 8. Raspberry Pi 即時推論
 
-## detect_pi.py
+## detect.py(測試是否可以部屬Yolov8)
 
 ```python
-import cv2
-import numpy as np
-import onnxruntime as ort
+from ultralytics import YOLO
 
-session = ort.InferenceSession("best.onnx")
+model = YOLO("yolov8n.pt")
 
-input_name = session.get_inputs()[0].name
-
-cap = cv2.VideoCapture(0)
-
-while True:
-
-    ret, frame = cap.read()
-
-    if not ret:
-        break
-
-    img = cv2.resize(frame, (320,320))
-
-    img = img.astype(np.float32)/255.0
-    img = np.transpose(img,(2,0,1))
-    img = np.expand_dims(img,0)
-
-    outputs = session.run(
-        None,
-        {input_name: img}
-    )
-
-    cv2.imshow("Detection",frame)
-
-    if cv2.waitKey(1)==27:
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+print("YOLO OK")
 ```
 
 ---
 
-# 10. CSV紀錄系統
+# 9. CSV紀錄系統
 
-## 建立CSV
+## 開始訓練
 
 ```python
-import csv
-
-with open("log.csv","w",newline="") as f:
-
-    writer = csv.writer(f)
-
-    writer.writerow([
-        "timestamp",
-        "class",
-        "confidence"
-    ])
+yolo detect train model=yolov8n.pt data=fire.yaml epochs=80 imgsz=320) ##640 → 太慢  320 → 最佳 FPS 256 → 更快但稍降準確率
 ```
 
 ---
 
-## 寫入紀錄
+## 輸出模型
 
 ```python
-import csv
-import time
-
-def log_detection(cls,conf):
-
-    with open("log.csv","a",newline="") as f:
-
-        writer = csv.writer(f)
-
-        writer.writerow([
-            time.strftime("%Y-%m-%d %H:%M:%S"),
-            cls,
-            conf
-        ])
+runs/detect/train/weights/best.pt
 ```
 
 ---
@@ -325,111 +320,18 @@ imgsz = 320
 
 ---
 
-## 使用 YOLOv8n
-
-```text
-YOLOv8n
-```
-
-最適合 Raspberry Pi 4
-
----
-
-## Frame Skip
-
-```python
-if frame_id % 2 != 0:
-    continue
-```
-
----
-
-## 關閉GUI
-
-避免大量使用：
-
-```python
-cv2.imshow()
-```
-
----
-
-## ONNX Runtime
-
-比 PyTorch 快許多。
-
----
-
-# 12. 系統架構圖
-
-```text
-Camera
-   │
-   ▼
-Raspberry Pi 4
-   │
-   ▼
-ONNX Runtime
-   │
-   ▼
-YOLOv8n Detection
-   │
-   ├── Alarm
-   │
-   ├── CSV Log
-   │
-   └── Dashboard
-```
-
 ---
 
 # 13. 預期效能分析
 
 | 模型 | 解析度 | FPS |
 |--------|--------|--------|
-| YOLOv8n | 640 | 1~2 |
-| YOLOv8n | 320 | 3~6 |
-| ONNX | 320 | 5~10 |
+| YOLOv8n | 640 | 1~2 |  #rapberry pi 4 根本吃不消
+| YOLOv8n | 320 | 3~6 |  #此作業用法
 
----
 
-# 14. 升級架構
 
-## Coral TPU
-
-```text
-Pi + Coral TPU
-```
-
-推論速度：
-
-```text
-10~30 FPS
-```
-
----
-
-## Jetson Nano
-
-```text
-Jetson Nano
-```
-
-具備 CUDA 支援。
-
----
-
-## Jetson Orin Nano
-
-```text
-40~100 FPS
-```
-
-適合工業級部署。
-
----
-
-# 15. 專題應用價值
+# 15. 作業實際應用價值
 
 ## 智慧家庭
 
@@ -455,7 +357,7 @@ Jetson Nano
 
 ---
 
-# 16. 為什麼 Raspberry Pi 4 不適合大模型
+# 16. 為啥 Raspberry Pi 4 不適合大模型
 
 ## Raspberry Pi 4 硬體限制
 
@@ -467,6 +369,8 @@ Jetson Nano
 | CUDA | 無 |
 | Tensor Core | 無 |
 
+
+**簡單來說pi 4 本身就有限制取決你想做到哪，如果用pi 5效果會大幅提升**
 ---
 
 ## 模型大小比較
@@ -579,6 +483,8 @@ INT8
 
 ## IoT整合
 
+**可以加入即時影像去辨識**
+
 ```text
 Camera
   ↓
@@ -600,7 +506,6 @@ Dashboard
 透過：
 
 - YOLOv8n
-- ONNX Runtime
 - Raspberry Pi 4
 - CSV Logging
 

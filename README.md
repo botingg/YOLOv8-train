@@ -1,8 +1,8 @@
 # YOLOv8 + Raspberry Pi 4 火災偵測系統完整開發
 
-## 專案目標
+## 作業目標
 
-本專案旨在建置一套基於 YOLOv8 與 Raspberry Pi 4 的即時火災偵測系統，利用 Edge AI 技術於本地端完成影像分析，降低雲端運算依賴，提高即時性與系統可靠度。
+本作業旨在建置一套基於 YOLOv8 與 Raspberry Pi 4 的即時火災偵測系統，利用 Edge AI 技術於本地端完成影像分析，降低雲端運算依賴，提高即時性與系統可靠度。
 
 ---
 
@@ -51,17 +51,6 @@ yolov8-pi-project/
 # 2. 架構圖
 
 <img src="yolov8_fire.drawio.png" width="300">
-
-
-## 安裝必要套件
-
-```bash
-pip install ultralytics
-pip install opencv-python
-pip install numpy
-pip install pandas
-pip install matplotlib
-```
 
 
 # 3. Dataset 準備
@@ -308,21 +297,20 @@ yolo detect train model=yolov8n.pt data=fire.yaml epochs=80 imgsz=320) ##640 →
 runs/detect/train/weights/best.pt
 ```
 
----
 
-# 11. FPS優化技巧
+# 10. FPS優化技巧
+**驗證與查看**
+<img src="runs\detect\train\results.png" width="300">
+
+
+
+# 11. 預期效能分析
 
 ## 降低解析度
 
 ```python
 imgsz = 320
 ```
-
----
-
----
-
-# 13. 預期效能分析
 
 | 模型 | 解析度 | FPS |
 |--------|--------|--------|
@@ -331,7 +319,7 @@ imgsz = 320
 
 
 
-# 15. 作業實際應用價值
+# 12. 作業實際應用價值
 
 ## 智慧家庭
 
@@ -357,7 +345,7 @@ imgsz = 320
 
 ---
 
-# 16. 為啥 Raspberry Pi 4 不適合大模型
+# 13. 為啥 Raspberry Pi 4 不適合大模型
 
 ## Raspberry Pi 4 硬體限制
 
@@ -429,7 +417,7 @@ Pi只能依靠CPU運算。
 
 ---
 
-# 17. 未來展望
+# 14. 未來展望
 
 ## Tiny AI
 
@@ -499,7 +487,7 @@ Dashboard
 
 ---
 
-# 18. 結論
+# 15. 結論
 
 本系統利用 YOLOv8n 與 Raspberry Pi 4 建立低成本 Edge AI 火災偵測平台。
 

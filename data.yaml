@@ -1,0 +1,5 @@
+path: C:/Users/User/Downloads/yolov8_fire/dataset/  # 資料夾路徑
+train: train/images
+val: val/images
+names:
+  0: fire

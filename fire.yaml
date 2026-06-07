@@ -2,4 +2,4 @@ train: dataset/images
 val: dataset/images
 
 nc: 1
-names: ["fire"]
+names: ["fire","smoke"]

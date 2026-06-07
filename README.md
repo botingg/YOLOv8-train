@@ -6,7 +6,10 @@
 
 ---
 
-# 1. Path_Tree
+# 1. BreakDown & TREE
+
+<img src="fire.drawio.png" width="700">
+
 
 ```text
 yolov8-pi-project/
@@ -50,7 +53,7 @@ yolov8-pi-project/
 
 # 2. 架構圖
 
-<img src="yolov8_fire.drawio.png" width="300">
+<img src="fire1.drawio.png" width="200">
 
 
 # 3. Dataset 準備
@@ -314,7 +317,13 @@ runs/detect/train/weights/best.pt
 
 # 10. 驗證與查看
 
-<img src="runs\detect\train\results.png" width="500">
+<img src="burn_fire_detected.gif" width="300">
+<img src="burn1_fire_detected.gif" width="300">
+<img src="burn2_fire_detected.gif" width="300">
+
+
+
+
 <img src="runs\detect\train\train_batch1.jpg" width="500">
 <img src="runs\detect\train\train_batch2.jpg" width="500">
 <img src="runs\detect\train\train_batch420.jpg" width="500">

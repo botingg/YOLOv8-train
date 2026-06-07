@@ -47,6 +47,7 @@ yolov8-pi-project/
 ├── yolo26n.pt
 ├── yolov8n.pt
 └── README.md
+└── ......
 ```
 
 ---

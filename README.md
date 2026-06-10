@@ -59,8 +59,309 @@ yolov8-pi-project/
 
 <img src="fire1.drawio.png" width="200">
 
+# 3. System Components - What / Why / How
 
-# 3. Dataset 準備
+本專題使用 YOLOv8 建立火災偵測系統，主要包含四個核心模組：
+
+- cv2.VideoCapture
+- CSV Logging
+- Bounding Box Drawing
+- cv2.VideoWriter
+
+---
+
+### cv2.VideoCapture
+
+#### What
+
+`cv2.VideoCapture` 是 OpenCV 提供的影像輸入模組，用於讀取影片檔案或攝影機畫面。
+
+---
+
+#### Why
+
+YOLOv8 無法直接讀取影片，因此需要先透過 VideoCapture 將影片轉換成逐幀(Frame)影像，再送入模型進行推論。
+
+---
+
+#### How
+
+讀取影片：
+
+```python
+cap = cv2.VideoCapture(video_path)
+
+while True:
+    ret, frame = cap.read()
+
+    if not ret:
+        break
+```
+
+---
+
+#### Workflow
+
+```text
+Video File
+     ↓
+cv2.VideoCapture
+     ↓
+Frame Extraction
+     ↓
+YOLOv8 Detection
+```
+
+---
+
+### CSV Logging
+
+#### What
+
+CSV（Comma-Separated Values）是一種簡單且常用的資料儲存格式，用於記錄火災偵測結果。
+
+---
+
+#### Why
+
+建立火災事件紀錄：
+
+- 紀錄火災發生時間
+- 紀錄信心值
+- 方便後續分析
+- 作為系統歷史資料庫
+
+---
+
+#### How
+
+CSV內容：
+
+```text
+Timestamp,Class,Confidence
+```
+
+範例：
+
+```text
+2025-06-10 14:30:21,fire,0.95
+2025-06-10 14:30:22,fire,0.91
+2025-06-10 14:30:23,fire,0.89
+```
+
+Python實作：
+
+```python
+import csv
+import time
+
+with open("log.csv","a",newline="") as f:
+
+    writer = csv.writer(f)
+
+    writer.writerow([
+        time.strftime("%Y-%m-%d %H:%M:%S"),
+        "fire",
+        0.95
+    ])
+```
+
+---
+
+#### Workflow
+
+```text
+YOLOv8 Detection
+        ↓
+Detection Result
+        ↓
+CSV Logging
+        ↓
+log.csv
+```
+
+---
+
+### Bounding Box Drawing
+
+#### What
+
+Bounding Box 是 YOLOv8 偵測完成後，在目標周圍繪製的矩形框。
+
+---
+
+#### Why
+
+讓使用者能夠快速確認：
+
+- 火焰位置
+- 火焰範圍
+- 偵測結果是否正確
+
+提高系統可視化效果。
+
+---
+
+#### How
+
+YOLOv8輸出：
+
+```text
+x1, y1, x2, y2
+```
+
+代表：
+
+```text
+左上角座標
+右下角座標
+```
+
+OpenCV畫框：
+
+```python
+cv2.rectangle(
+    frame,
+    (x1,y1),
+    (x2,y2),
+    (0,0,255),
+    2
+)
+```
+
+加入標籤：
+
+```python
+cv2.putText(
+    frame,
+    f"Fire {conf:.2f}",
+    (x1,y1-10),
+    cv2.FONT_HERSHEY_SIMPLEX,
+    0.8,
+    (0,0,255),
+    2
+)
+```
+
+---
+
+#### Workflow
+
+```text
+YOLOv8 Detection
+        ↓
+Bounding Box Coordinates
+        ↓
+cv2.rectangle()
+        ↓
+Detection Visualization
+```
+
+---
+
+### cv2.VideoWriter
+
+#### What
+
+`cv2.VideoWriter` 是 OpenCV 提供的影片輸出模組，可將偵測後的畫面儲存成影片。
+
+---
+
+#### Why
+
+保存火災偵測過程：
+
+- 專題展示
+- 系統驗證
+- 事件回放
+- 證據保存
+
+---
+
+#### How
+
+建立輸出影片：
+
+```python
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+
+out = cv2.VideoWriter(
+    'output.mp4',
+    fourcc,
+    30,
+    (width,height)
+)
+```
+
+寫入畫面：
+
+```python
+out.write(frame)
+```
+
+結束儲存：
+
+```python
+out.release()
+```
+
+---
+
+#### Workflow
+
+```text
+YOLOv8 Detection
+        ↓
+Bounding Box Drawing
+        ↓
+cv2.VideoWriter
+        ↓
+output.mp4
+```
+
+---
+
+## Overall System Workflow
+
+```text
+Video Input
+(cv2.VideoCapture)
+        │
+        ▼
+YOLOv8 Fire Detection
+        │
+        ├────────► Bounding Box Drawing
+        │
+        ├────────► CSV Logging
+        │
+        ▼
+cv2.VideoWriter
+        │
+        ▼
+Output Video
+```
+
+---
+
+## Summary Table
+
+| Component | What | Why | How |
+|------------|------------|------------|------------|
+| cv2.VideoCapture | 讀取影片與攝影機畫面 | 提供 YOLOv8 輸入資料 | cap.read() |
+| CSV Logging | 儲存偵測紀錄 | 建立事件資料庫 | csv.writer() |
+| Bounding Box Drawing | 顯示火焰位置 | 提升可視化效果 | cv2.rectangle() |
+| cv2.VideoWriter | 輸出偵測影片 | 保存結果與回放 | out.write() |
+
+---
+**Project:** YOLOv8 Fire Detection System  
+**Platform:** Raspberry Pi 4 / Windows PC  
+**Model:** YOLOv8n  
+**Output:** Bounding Box + CSV Log + Output Video
+
+
+
+
+# 4. Dataset 準備
 
 YOLO yaml格式：
 
@@ -186,7 +487,7 @@ save_dir: your_path
 
 ---
 
-# 4. 建立 fire.yaml
+# 5. 建立 fire.yaml
 
 ```yaml
 path: dataset
@@ -203,7 +504,7 @@ names:
 
 ---
 
-# 5. 裁切測試檔案 YOLOv8
+# 6. 裁切測試檔案 YOLOv8
 
 ## extract_frames.py
 
@@ -245,7 +546,7 @@ python detect_fire.py
 
 ---
 
-# 6. 訓練結果分析
+# 7. 訓練結果分析
 
 輸出目錄：
 
@@ -266,7 +567,7 @@ runs/detect/train/
 ---
 
 
-# 7. Raspberry Pi 4 環境建置
+# 8. Raspberry Pi 4 環境建置
 
 ## 更新系統
 
@@ -288,7 +589,7 @@ pip3 install onnxruntime
 
 ---
 
-# 8. Raspberry Pi 即時推論
+# 9. Raspberry Pi 即時推論
 
 ## detect.py(測試是否可以部屬Yolov8)
 
@@ -302,7 +603,7 @@ print("YOLO OK")
 
 ---
 
-# 9. CSV紀錄系統
+# 10. CSV紀錄系統
 
 ## 開始訓練
 
@@ -319,7 +620,7 @@ runs/detect/train/weights/best.pt
 ```
 
 
-# 10. 驗證與查看
+# 11. 驗證與查看
 
 **由於樹梅派是安裝純bash的版本這方面驗證我是利用SCP指令丟到PC端查看**
 ```python
@@ -348,7 +649,7 @@ scp -r ./yolov8_fire boting@192.168.1.168:/C:\Users\User\Desktop
 
 
 
-# 11. 預期效能分析
+# 12. 預期效能分析
 
 ## 降低解析度
 
@@ -363,7 +664,7 @@ imgsz = 320
 
 
 
-# 12. 作業實際應用價值
+# 13. 作業實際應用價值
 
 ## 智慧家庭
 
@@ -389,7 +690,7 @@ imgsz = 320
 
 ---
 
-# 13. 為啥 Raspberry Pi 4 不適合大模型
+# 14. 為啥 Raspberry Pi 4 不適合大模型
 
 ## Raspberry Pi 4 硬體限制
 
@@ -461,7 +762,7 @@ Pi只能依靠CPU運算。
 
 ---
 
-# 14. 未來展望
+# 15. 未來展望
 
 ## Tiny AI
 
@@ -531,7 +832,7 @@ Dashboard
 
 ---
 
-# 15. 結論
+# 16. 結論
 
 本系統利用 YOLOv8n 與 Raspberry Pi 4 建立低成本 Edge AI 火災偵測平台。
 

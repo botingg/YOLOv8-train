@@ -14,17 +14,17 @@
 ```text
 yolov8-pi-project/
 │
-├── dataset/
+├── dataset/(以0.5秒猜切影片成圖片)
 │   ├── images/
 │   │   ├── all_png.....
 
 │
 ├── output/
-│   ├── output_burn.mp4
-│   ├── output_burn1.mp4
-│   ├── output_burn2.mp4
-│
-├── runs/
+│   ├── burn0_fire_detected.mp4(輸出影片1)
+│   ├── burn1_fire_detected.mp4(輸出影片2)
+│   ├── burn2_fire_detected.mp4(輸出影片3)
+│   ├── ......(圖片)
+├── runs/(權重與訓練驗證集)
 │   ├── detect
 │   |  ├── train
 │   |  |  ├── weights
@@ -38,9 +38,9 @@ yolov8-pi-project/
 │   |  |  ├──  args.yaml
 │   |  |  ├──  ...
 ├── data.yaml
-├── burn.mp4
-├── burn1.mp4
-├── burn2.mp4
+├── burn.mp4(測試影片檔案1)
+├── burn1.mp4(測試影片檔案2)
+├── burn2.mp4(測試影片檔案3)
 ├── detect.py
 ├── extract_frames.py
 ├── fire.yaml

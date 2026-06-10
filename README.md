@@ -234,7 +234,7 @@ print("Done extracting frames")
 )
 ```
 
-## 執行訓練
+## 執行訓練(產生權重檔案)
 
 ```bash
 python detect_fire.py
@@ -317,6 +317,11 @@ runs/detect/train/weights/best.pt
 
 
 # 10. 驗證與查看
+
+**由於樹梅派是安裝純bash的版本這方面驗證我是利用SCP指令丟到PC端查看**
+```python
+scp -r ./yolov8_fire boting@192.168.1.168:/C:\Users\User\Desktop
+```
 
 <img src="burn_fire_detected.gif" width="300">
 <img src="burn1_fire_detected.gif" width="300">

@@ -46,6 +46,9 @@ yolov8-pi-project/
 ├── fire.yaml
 ├── yolo26n.pt
 ├── yolov8n.pt
+└── burn0_fire_detected.gif
+└── burn1_fire_detected.gif
+└── burn2_fire_detected.gif
 └── README.md
 └── ......
 ```

@@ -625,7 +625,7 @@ runs/detect/train/weights/best.pt
 
 **由於樹梅派是安裝純bash的版本這方面驗證我是利用SCP指令丟到PC端查看**
 ```python
-scp -r ./yolov8_fire boting@192.168.1.168:/C:\Users\User\Desktop
+scp -r ./yolov8_fire boting@192.168.1.168:/C:/Users/User/Desktop
 ```
 
 <img src="burn_fire_detected.gif" width="300">

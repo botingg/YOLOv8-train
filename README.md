@@ -711,11 +711,11 @@ imgsz = 320
 
 | 模型 | 適用程度 |
 |--------|--------|
-| YOLOv8n | ✔ |
-| YOLOv8s | ⚠ |
-| YOLOv8m | ✘ |
-| YOLOv8l | ✘ |
-| YOLOv8x | ✘ |
+| YOLOv8n | 完全可以 |
+| YOLOv8s | 有點小危險 |
+| YOLOv8m | 完全不行 |
+| YOLOv8l | 完全不行 |
+| YOLOv8x | 完全不行 |
 
 ---
 

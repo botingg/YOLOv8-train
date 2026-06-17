@@ -15,7 +15,6 @@ for v in videos:
         if not ret:
             break
 
-        # 每 5 frame 存一張（避免太多）
         if count % 5 == 0:
             cv2.imwrite(f"dataset/images/img_{count}.jpg", frame)
 

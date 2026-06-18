@@ -8,7 +8,7 @@
 
 # 1. BreakDown & TREE
 
-<img src="fire1.drawio.png" width="500">
+<img src="./fire1.drawio.png" width="500">
 
 
 ```text

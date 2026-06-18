@@ -57,7 +57,7 @@ yolov8-pi-project/
 
 # 2. 架構圖
 
-<img src="yolov8_fire.drawio.png" width="500">
+<img src="yolov8_fire.drawio.png" width="600">
 
 # 3. System Components - What / Why / How
 

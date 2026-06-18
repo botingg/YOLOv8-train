@@ -8,7 +8,7 @@
 
 # 1. BreakDown & TREE
 
-<img src="fire1.drawio.png" width="700">
+<img src="fire1.drawio.png" width="400">
 
 
 ```text
@@ -57,7 +57,7 @@ yolov8-pi-project/
 
 # 2. 架構圖
 
-<img src="yolov8_fire.drawio.png" width="200">
+<img src="yolov8_fire.drawio.png" width="500">
 
 # 3. System Components - What / Why / How
 

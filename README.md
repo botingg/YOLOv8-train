@@ -503,50 +503,7 @@ Output Video
 全部完成視為通過。
 
 
-
-# 6. 裁切測試檔案 YOLOv8
-
-## extract_frames.py
-
-```python
-import cv2
-import os
-
-videos = ["burn.mp4", "burn1.mp4", "burn2.mp4"]
-
-os.makedirs("dataset/images", exist_ok=True)
-
-count = 0
-
-for v in videos:
-    cap = cv2.VideoCapture(v)
-
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # 每 5 frame 存一張（避免太多）
-        if count % 5 == 0:
-            cv2.imwrite(f"dataset/images/img_{count}.jpg", frame)
-
-        count += 1
-
-cap.release()
-
-print("Done extracting frames")
-)
-```
-
-## 執行訓練(產生權重檔案)
-
-```bash
-python detect_fire.py
-```
-
----
-
-# 7. 訓練結果分析
+# 6. 訓練結果分析
 
 輸出目錄：
 
@@ -567,7 +524,7 @@ runs/detect/train/
 ---
 
 
-# 8. Raspberry Pi 4 環境建置
+# 7. Raspberry Pi 4 環境建置
 
 ## 更新系統
 
@@ -590,7 +547,7 @@ pip3 install onnxruntime
 
 ---
 
-# 9. Raspberry Pi 即時推論
+# 8. Raspberry Pi 即時推論
 
 ## detect.py(測試是否可以部屬Yolov8)
 
@@ -604,7 +561,7 @@ print("YOLO OK")
 
 ---
 
-# 10. CSV紀錄系統
+# 9. CSV紀錄系統
 
 ## 開始訓練
 
@@ -621,7 +578,7 @@ runs/detect/train/weights/best.pt
 ```
 
 
-# 11. 驗證與查看
+# 10. 驗證與查看
 
 **由於樹梅派是安裝純bash的版本這方面驗證我是利用SCP指令丟到PC端查看**
 ```python
@@ -650,7 +607,7 @@ scp -r ./yolov8_fire boting@192.168.1.168:/C:/Users/User/Desktop
 
 
 
-# 12. 預期效能分析
+# 11. 預期效能分析
 
 ## 降低解析度
 
@@ -665,7 +622,7 @@ imgsz = 320
 
 
 
-# 13. 作業實際應用價值
+# 12. 作業實際應用價值
 
 ## 智慧家庭
 
@@ -691,7 +648,7 @@ imgsz = 320
 
 ---
 
-# 14. 為啥 Raspberry Pi 4 不適合大模型
+# 13. 為啥 Raspberry Pi 4 不適合大模型
 
 ## Raspberry Pi 4 硬體限制
 
@@ -763,7 +720,7 @@ Pi只能依靠CPU運算。
 
 ---
 
-# 15. 未來展望
+# 14. 未來展望
 
 ## Tiny AI
 
@@ -833,7 +790,7 @@ Dashboard
 
 ---
 
-# 16. 結論
+# 15. 結論
 
 本系統利用 YOLOv8n 與 Raspberry Pi 4 建立低成本 Edge AI 火災偵測平台。
 

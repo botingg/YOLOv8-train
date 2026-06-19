@@ -44,7 +44,6 @@ yolov8-pi-project/
 ├── detect.py
 ├── extract_frames.py
 ├── fire.yaml
-├── yolo26n.pt
 ├── yolov8n.pt
 └── burn0_fire_detected.gif
 └── burn1_fire_detected.gif

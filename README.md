@@ -491,7 +491,7 @@ Output Video
 
 ## 5. 驗收方式 (Acceptance Criteria)
 
-### 驗收項目一：功能驗收
+### 驗收項目一：功能驗收(完成)
 
 成功條件：
 
@@ -500,7 +500,16 @@ Output Video
 - 可顯示 Bounding Box
 - 可輸出 CSV
 
-全部完成視為通過。
+
+### 驗收項目二：辨識率驗收(未完成)
+
+使用 Validation Dataset 進行驗證。
+
+  評估指標：會用老師提到的以下方法
+
+ - Precision
+ - Recall
+ - mAP50
 
 
 # 6. 訓練結果分析

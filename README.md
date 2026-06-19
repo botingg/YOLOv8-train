@@ -360,148 +360,149 @@ Output Video
 
 
 
-# 4. Dataset 準備
+# 4.系統功能、測試條件與驗收標準
 
-YOLO yaml格式：
+## 一. 系統功能 (Function)
 
-**tain&val準備訓練驗證參數**
+本系統使用 YOLOv8 建立火災偵測模型，透過攝影機或影片輸入進行即時分析，偵測畫面中是否出現火焰。
 
-<details>
-<summary><b>Train & Validation 訓練參數（點擊展開）</b></summary>
+### 火焰辨識
 
-```yaml
-task: detect
-mode: train
-model: yolov8n.pt
-data: fire.yaml
-epochs: 80
-time: null
-patience: 100
-batch: 16
-imgsz: 320
-save: true
-save_period: -1
-cache: false
-device: null
-workers: 8
-project: null
-name: train
-exist_ok: false
-pretrained: true
-optimizer: auto
-verbose: true
-seed: 0
-deterministic: true
-single_cls: false
-rect: false
-cos_lr: false
-close_mosaic: 10
-resume: false
-amp: true
-fraction: 1.0
-profile: false
-freeze: null
-multi_scale: 0.0
-compile: false
-overlap_mask: true
-mask_ratio: 4
-dropout: 0.0
-val: true
-split: val
-save_json: false
-conf: null
-iou: 0.7
-max_det: 300
-half: false
-dnn: false
-plots: true
-end2end: null
-source: null
-vid_stride: 1
-stream_buffer: false
-visualize: false
-augment: false
-agnostic_nms: false
-classes: null
-retina_masks: false
-embed: null
-show: false
-save_frames: false
-save_txt: false
-save_conf: false
-save_crop: false
-show_labels: true
-show_conf: true
-show_boxes: true
-line_width: null
-format: torchscript
-keras: false
-optimize: false
-int8: false
-dynamic: false
-simplify: true
-opset: null
-workspace: null
-nms: false
-lr0: 0.01
-lrf: 0.01
-momentum: 0.937
-weight_decay: 0.0005
-warmup_epochs: 3.0
-warmup_momentum: 0.8
-warmup_bias_lr: 0.1
-box: 7.5
-cls: 0.5
-cls_pw: 0.0
-dfl: 1.5
-pose: 12.0
-kobj: 1.0
-rle: 1.0
-angle: 1.0
-nbs: 64
-hsv_h: 0.015
-hsv_s: 0.7
-hsv_v: 0.4
-degrees: 0.0
-translate: 0.1
-scale: 0.5
-shear: 0.0
-perspective: 0.0
-flipud: 0.0
-fliplr: 0.5
-bgr: 0.0
-mosaic: 1.0
-mixup: 0.0
-cutmix: 0.0
-copy_paste: 0.0
-copy_paste_mode: flip
-auto_augment: randaugment
-erasing: 0.4
-cfg: null
-tracker: botsort.yaml
-save_dir: your_path
+- 偵測畫面中的火焰
+- 判斷火焰位置
+- 輸出 Bounding Box
 
-```
-</details>
+### 即時顯示
+
+- 顯示偵測結果
+- 顯示火焰位置
+- 顯示信心值 (Confidence)
+
+### 資料記錄
+
+- 紀錄偵測時間
+- 紀錄辨識結果
+- 輸出 CSV 檔案
+
+### 影片輸出
+
+- 將辨識結果寫入影片
+- 保存偵測過程
 
 ---
 
-# 5. 建立 fire.yaml
+## 二. 測試條件 (Test Conditions)
 
-```yaml
-path: dataset
+### 資料集條件
 
-train: images/train
-val: images/val
+訓練資料來源：
 
-nc: 2
+- burn.mp4
+- burn1.mp4
+- burn2.mp4
 
-names:
-  0: fire
-  1: smoke
-```
+影片每 0.5 秒擷取一張影像作為訓練資料。
 
 ---
+
+### 測試資料
+
+測試資料不可與訓練資料重複。
+
+資料分割：
+
+- Training Set：80%
+- Validation Set：20%
+
+---
+
+### 硬體環境
+
+#### 開發環境
+
+- Windows 10 / 11
+- Python 3.10
+- YOLOv8
+
+#### 部署環境
+
+- Raspberry Pi 4
+- USB Camera
+
+---
+
+### 測試項目
+
+#### 功能測試
+
+確認以下功能：
+
+- 能否讀取影片
+- 能否進行推論
+- 能否產生 Bounding Box
+- 能否輸出 CSV
+
+---
+
+#### 效能測試
+
+量測：
+
+- FPS
+- Inference Time
+- CPU Usage
+- RAM Usage
+
+---
+
+## 三. 設計文件需求 (Requirements)
+
+### Functional Requirements
+
+#### FR-01
+系統需能讀取影片或攝影機輸入。
+
+#### FR-02
+系統需能偵測火焰目標。
+
+#### FR-03
+系統需能繪製 Bounding Box。
+
+#### FR-04
+系統需能紀錄 CSV 檔案。
+
+#### FR-05
+系統需能輸出結果影片。
+
+---
+
+### Non-Functional Requirements
+
+#### NFR-01
+系統推論時間需低於 100 ms/frame。
+
+#### NFR-02
+系統需能連續運作 30 分鐘以上。
+
+#### NFR-03
+系統需維持穩定辨識能力。
+
+---
+
+## 5. 驗收方式 (Acceptance Criteria)
+
+### 驗收項目一：功能驗收
+
+成功條件：
+
+- 可讀取影片
+- 可進行 YOLOv8 推論
+- 可顯示 Bounding Box
+- 可輸出 CSV
+
+全部完成視為通過。
+
+
 
 # 6. 裁切測試檔案 YOLOv8
 

@@ -489,7 +489,7 @@ Output Video
 
 ---
 
-## 5. 驗收方式 (Acceptance Criteria)
+# 5. 驗收方式 (Acceptance Criteria)
 
 ### 驗收項目一：功能驗收(完成)
 

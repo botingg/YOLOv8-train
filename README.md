@@ -500,16 +500,6 @@ Output Video
 - 可輸出 CSV
 
 
-### 驗收項目二：辨識率驗收(未完成)
-
-使用 Validation Dataset 進行驗證。
-
-  評估指標：會用老師提到的以下方法
-
- - Precision
- - Recall
-
-
 # 6. 訓練結果分析
 
 輸出目錄：

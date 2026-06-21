@@ -427,7 +427,6 @@ Output Video
 #### 部署環境
 
 - Raspberry Pi 4
-- USB Camera
 
 ---
 
@@ -509,7 +508,6 @@ Output Video
 
  - Precision
  - Recall
- - mAP50
 
 
 # 6. 訓練結果分析
